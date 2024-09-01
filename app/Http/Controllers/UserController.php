@@ -27,8 +27,9 @@ class UserController extends Controller
 
         $body['password'] = bcrypt($body['password']);
 
-        User::create($body);
-        return 'uwu';
+        $user = User::create($body);
+        auth()->login($user);
+        return redirect('/')->with('success', 'Thank you for creating an account!');
     }
 
     public function login(Request $request) 
@@ -42,9 +43,15 @@ class UserController extends Controller
         if (auth()->attempt(['username'=>$body['loginusername'], 'password'=>$body['loginpassword']])) 
         {
             $request->session()->regenerate();
-            return 'Successful';
+            return redirect('/')->with('success', 'You have successfully logged in.');
         }
 
-        return 'not successful';
+        return redirect('/')->with('failure', 'Invalid login.');
+    }
+
+    public function logout() 
+    {
+        auth()->logout();
+        return redirect('/')->with('success', 'You are now logged out.');
     }
 }
