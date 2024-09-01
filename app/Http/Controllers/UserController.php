@@ -8,6 +8,15 @@ use App\Models\User;
 
 class UserController extends Controller
 {
+    public function homepage() 
+    {
+        if (auth()->check()) {
+            return view('homepage-feed');
+        }
+
+        return view('homepage');
+    }
+
     public function register(Request $request)
     {
         $body = $request->validate([
@@ -20,5 +29,22 @@ class UserController extends Controller
 
         User::create($body);
         return 'uwu';
+    }
+
+    public function login(Request $request) 
+    {
+        $body = $request->validate([
+            'loginusername' => 'required',
+            'loginpassword' => 'required'
+        ]);
+    
+
+        if (auth()->attempt(['username'=>$body['loginusername'], 'password'=>$body['loginpassword']])) 
+        {
+            $request->session()->regenerate();
+            return 'Successful';
+        }
+
+        return 'not successful';
     }
 }
