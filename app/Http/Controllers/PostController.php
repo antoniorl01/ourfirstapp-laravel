@@ -23,12 +23,13 @@ class PostController extends Controller
         $body["body"] = strip_tags($body["body"]);
         $body["user_id"] = auth()->id(); // get the user id from the session
 
-        Post::create($body);
+        $new_post = Post::create($body);
+        return redirect("/post/{$new_post->id}")->with('success', 'New Post Created');
     }
 
     public function viewSinglePost(Post $post)
     {
-        # Laravel queries for us 
+        # Laravel queries for us directly
         return view('single-post', ['post' => $post]);
     }
 }
