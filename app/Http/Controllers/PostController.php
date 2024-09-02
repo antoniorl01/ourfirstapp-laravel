@@ -25,4 +25,10 @@ class PostController extends Controller
 
         Post::create($body);
     }
+
+    public function viewSinglePost(Post $post)
+    {
+        # Laravel queries for us 
+        return view('single-post', ['post' => $post]);
+    }
 }
