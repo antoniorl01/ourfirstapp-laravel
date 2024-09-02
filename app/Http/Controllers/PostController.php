@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -30,6 +31,7 @@ class PostController extends Controller
     public function viewSinglePost(Post $post)
     {
         # Laravel queries for us directly
+        $post['body'] = strip_tags(Str::markdown($post->body), '<p><ul><ol><il><strong><em><h3><br>');
         return view('single-post', ['post' => $post]);
     }
 }

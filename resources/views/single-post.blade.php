@@ -1,5 +1,5 @@
 <x-layout>
-    
+
     <div class="container py-md-5 container--narrow">
       <div class="d-flex justify-content-between">
         <h2>{{$post->title}}</h2>
@@ -17,7 +17,7 @@
       </p>
 
       <div class="body-content">
-        <p>{{$post->body}}</p>
+        {!! $post->body !!}
       </div>
     </div>
 </x-layout>
